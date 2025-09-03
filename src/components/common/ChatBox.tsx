@@ -1,0 +1,58 @@
+interface ChatBoxProps {
+  imgFallBack: string;
+  name: string;
+  isMe?: boolean;
+  time: string;
+  profileColor: string;
+  message: string;
+}
+
+function ChatBox({
+  imgFallBack,
+  isMe = false,
+  name,
+  profileColor,
+  time,
+  message,
+}: ChatBoxProps) {
+  return (
+    <div className={`flex items-start space-x-2 ${isMe ? "justify-end" : ""}`}>
+      {isMe && (
+        <>
+          <div className="flex-1">
+            <div className="text-xs text-gray-500 dark:text-gray-400 mb-1 text-right">
+              {name} • {time}
+            </div>
+            <div className="bg-primary text-white rounded-lg px-3 py-2 text-sm ml-8">
+              {message}
+            </div>
+          </div>
+          <div
+            className={`size-6 ${profileColor} rounded-full flex items-center justify-center text-xs text-white font-medium`}
+          >
+            {imgFallBack}
+          </div>
+        </>
+      )}
+      {!isMe && (
+        <>
+          <div
+            className={`size-6 ${profileColor} rounded-full flex items-center justify-center text-xs text-white font-medium`}
+          >
+            {imgFallBack}
+          </div>
+          <div className="flex-1">
+            <div className="text-xs text-gray-500 dark:text-gray-400 mb-1">
+              {name} • {time}
+            </div>
+            <div className="bg-gray-100 dark:bg-gray-700 rounded-lg px-3 py-2 text-sm text-gray-900 dark:text-gray-100">
+              {message}
+            </div>
+          </div>
+        </>
+      )}
+    </div>
+  );
+}
+
+export default ChatBox;

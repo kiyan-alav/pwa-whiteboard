@@ -1,0 +1,38 @@
+// product.api.ts
+import axios from 'axios'
+
+export const getProducts = () => axios.get('/api/products').then(res => res.data)
+export const getProductById = (id: string) => axios.get(`/api/products/${id}`).then(res => res.data)
+export const createProduct = (data) => axios.post('/api/products', data).then(res => res.data)
+
+
+----------------------------------------
+
+// product.queries.ts
+import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
+import * as api from './product.api'
+
+export const useProducts = () =>
+  useQuery({ queryKey: ['products'], queryFn: api.getProducts })
+
+export const useProduct = (id: string) =>
+  useQuery({ queryKey: ['product', id], queryFn: () => api.getProductById(id) })
+
+export const useCreateProduct = () => {
+  const queryClient = useQueryClient()
+  return useMutation({
+    mutationFn: api.createProduct,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['products'] })
+    },
+  })
+}
+
+
+----------------------------------------
+
+features/
+    products/
+      product.api.ts
+      product.queries.ts
+      product.types.ts
