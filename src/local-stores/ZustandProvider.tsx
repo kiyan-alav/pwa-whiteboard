@@ -1,7 +1,12 @@
 "use client";
 
 import { ReactNode } from "react";
+import { UiStoreProvider } from "./providers/ui-store-provider";
 
 export const ZustandProvider = ({ children }: { children: ReactNode }) => {
-  return <>{children}</>;
+  return (
+    <>
+      <UiStoreProvider>{children}</UiStoreProvider>
+    </>
+  );
 };

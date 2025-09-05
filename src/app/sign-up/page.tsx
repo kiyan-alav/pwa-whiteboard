@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button";
 import { useUiStore } from "@/local-stores/providers/ui-store-provider";
 import Link from "next/link";
 
-export default function Login() {
+function SignUp() {
   const theme = useUiStore((state) => state.theme);
   const toggleTheme = useUiStore((state) => state.toggleTheme);
 
@@ -129,20 +129,45 @@ export default function Login() {
             </h1>
           </div>
 
-          <div className="max-w-md mx-auto w-full">
+          <div id="register-form" className="max-w-md mx-auto w-full">
             <div className="text-center mb-8">
               <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-2">
-                Welcome back
+                Create account
               </h2>
               <p className="text-gray-600 dark:text-gray-400">
-                Sign in to your account to continue
+                Join thousands of teams collaborating on CollabBoard
               </p>
             </div>
 
             <form
               className="space-y-6"
-              // onsubmit="handleLogin(event)"
+              // onsubmit="handleRegister(event)"
             >
+              <div className="grid grid-cols-2 gap-4">
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                    First name
+                  </label>
+                  <input
+                    type="text"
+                    required
+                    className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent transition-colors"
+                    placeholder="John"
+                  />
+                </div>
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                    Last name
+                  </label>
+                  <input
+                    type="text"
+                    required
+                    className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent transition-colors"
+                    placeholder="Doe"
+                  />
+                </div>
+              </div>
+
               <div>
                 <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                   Email address
@@ -151,7 +176,7 @@ export default function Login() {
                   type="email"
                   required
                   className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent transition-colors"
-                  placeholder="Enter your email"
+                  placeholder="john@example.com"
                 />
               </div>
 
@@ -163,7 +188,19 @@ export default function Login() {
                   type="password"
                   required
                   className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent transition-colors"
-                  placeholder="Enter your password"
+                  placeholder="Create a strong password"
+                />
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                  Confirm password
+                </label>
+                <input
+                  type="password"
+                  required
+                  className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent transition-colors"
+                  placeholder="Confirm your password"
                 />
               </div>
 
@@ -172,7 +209,7 @@ export default function Login() {
                 variant="default"
                 className="w-full bg-primary hover:bg-blue-600 dark:bg-primary/80 text-white font-medium py-3 px-4 rounded-lg transition-colors focus:ring-2 focus:ring-primary focus:ring-offset-2 dark:focus:ring-offset-gray-900"
               >
-                Sign in
+                Create account
               </Button>
             </form>
 
@@ -185,12 +222,12 @@ export default function Login() {
             </div>
 
             <p className="mt-8 text-center text-sm text-gray-600 dark:text-gray-400">
-              Don't have an account?{" "}
+              Already have an account?{" "}
               <Link
-                href="/sign-up"
+                href="/"
                 className="text-primary hover:text-blue-600 font-medium transition-colors"
               >
-                Sign up
+                Sign in
               </Link>
             </p>
           </div>
@@ -199,3 +236,5 @@ export default function Login() {
     </>
   );
 }
+
+export default SignUp;

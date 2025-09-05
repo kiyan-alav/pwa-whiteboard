@@ -1,4 +1,4 @@
-@import "tailwindcss";
+@import "tailwindcss" important;
 @import "tw-animate-css";
 
 @custom-variant dark (&:is(.dark *));
@@ -115,8 +115,8 @@
 @layer base {
   * {
     @apply border-border outline-ring/50;
-    transition: background-color 0.3s ease, border-color 0.3s ease,
-      color 0.3s ease;
+    transition: border-color 0.3s ease, outline-color 0.3s ease,
+      background-color 0.3s ease, color 0.3s ease, color 0.3s ease, color 0.3s ease;
   }
   body {
     @apply bg-background text-foreground;
@@ -142,4 +142,18 @@
 }
 .dark .chat-scroll::-webkit-scrollbar-thumb {
   background: #475569;
+}
+.form-slide-enter {
+  transform: translateX(100%);
+  opacity: 0;
+}
+.form-slide-exit {
+  transform: translateX(-100%);
+  opacity: 0;
+}
+.gradient-bg {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+}
+.dark .gradient-bg {
+  background: linear-gradient(135deg, #1e3a8a 0%, #312e81 100%);
 }
