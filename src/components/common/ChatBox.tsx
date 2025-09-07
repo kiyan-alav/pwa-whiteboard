@@ -1,3 +1,5 @@
+import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
+
 interface ChatBoxProps {
   imgFallBack: string;
   name: string;
@@ -27,20 +29,26 @@ function ChatBox({
               {message}
             </div>
           </div>
-          <div
-            className={`size-6 ${profileColor} rounded-full flex items-center justify-center text-xs text-white font-medium`}
+          <Avatar
+            className={`size-6 rounded-full flex items-center justify-center text-sm text-white font-medium`}
           >
-            {imgFallBack}
-          </div>
+            <AvatarImage src="" />
+            <AvatarFallback className={`${profileColor}`}>
+              {imgFallBack}
+            </AvatarFallback>
+          </Avatar>
         </>
       )}
       {!isMe && (
         <>
-          <div
-            className={`size-6 ${profileColor} rounded-full flex items-center justify-center text-xs text-white font-medium`}
+          <Avatar
+            className={`size-6 rounded-full flex items-center justify-center text-sm text-white font-medium`}
           >
-            {imgFallBack}
-          </div>
+            <AvatarImage src="" />
+            <AvatarFallback className={`${profileColor}`}>
+              {imgFallBack}
+            </AvatarFallback>
+          </Avatar>
           <div className="flex-1">
             <div className="text-xs text-gray-500 dark:text-gray-400 mb-1">
               {name} • {time}

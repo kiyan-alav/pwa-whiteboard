@@ -6,3 +6,5 @@ export const createNewUser = (data: CreateNewUserData) =>
 
 export const loginUser = (data: LoginUserData) =>
   axiosClient.post("/api/login", data);
+
+export const getMe = () => axiosClient.get("/api/me").then((res) => res.data.data);

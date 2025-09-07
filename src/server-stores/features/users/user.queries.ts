@@ -1,8 +1,8 @@
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 import * as api from "./user.api";
-import { CreateNewUserData, LoginUserData } from "./user.types";
+import { CreateNewUserData, LoginUserData, User } from "./user.types";
 
 export const useCreateNewUser = () => {
   const router = useRouter();
@@ -33,3 +33,6 @@ export const useLoginUser = () => {
     },
   });
 };
+
+export const useGetMeUser = () =>
+  useQuery<User>({ queryKey: ["users"], queryFn: api.getMe });

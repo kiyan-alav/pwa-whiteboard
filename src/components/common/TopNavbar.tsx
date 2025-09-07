@@ -1,9 +1,18 @@
 import { useUiStore } from "@/local-stores/providers/ui-store-provider";
+import { useGetMeUser } from "@/server-stores/features/users/user.queries";
+import {
+  HoverCard,
+  HoverCardContent,
+  HoverCardTrigger,
+} from "@radix-ui/react-hover-card";
+import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 import { Button } from "../ui/button";
 
 function TopNavbar() {
   const theme = useUiStore((state) => state.theme);
   const toggleTheme = useUiStore((state) => state.toggleTheme);
+
+  const { data, isError } = useGetMeUser();
 
   return (
     <nav className="bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700 px-4 py-3 flex items-center justify-between shadow-sm">
@@ -50,25 +59,56 @@ function TopNavbar() {
             </svg>
           )}
         </Button>
-        <div className="size-8 bg-gray-200 dark:bg-gray-700 rounded-full flex items-center justify-center cursor-pointer hover:bg-gray-300 dark:hover:bg-gray-600 transition-colors">
-          <svg
-            className="w-5 h-5 text-gray-600 dark:text-gray-300"
-            fill="currentColor"
-            viewBox="0 0 20 20"
-          >
-            <path
-              fillRule="evenodd"
-              d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z"
-              clipRule="evenodd"
-            />
-          </svg>
-        </div>
-        <Button
-          variant="outline"
-          className="px-4 py-2 text-sm text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white transition-colors"
-        >
-          Logout
-        </Button>
+
+        <HoverCard>
+          <HoverCardTrigger asChild>
+            <Button
+              variant="ghost"
+              className="p-0 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800"
+            >
+              <Avatar className="size-9">
+                <AvatarImage src="" alt="User avatar" />
+                <AvatarFallback>
+                  {data ? `${data.firstName[0]}${data.lastName[0]}` : "?"}
+                </AvatarFallback>
+              </Avatar>
+            </Button>
+          </HoverCardTrigger>
+
+          <HoverCardContent className="w-64 p-4 rounded-2xl shadow-lg bg-white dark:bg-gray-900">
+            {!isError && data && (
+              <div className="flex flex-col items-start gap-3">
+                <div className="flex items-center gap-3">
+                  <Avatar className="size-12">
+                    <AvatarImage src="/default-avatar.png" alt="User avatar" />
+                    <AvatarFallback>
+                      {`${data.firstName[0]}${data.lastName[0]}`}
+                    </AvatarFallback>
+                  </Avatar>
+                  <div>
+                    <h4 className="text-sm font-semibold">
+                      {`${data.firstName} ${data.lastName}`}
+                    </h4>
+                    <p className="text-xs text-muted-foreground">
+                      {data.email}
+                    </p>
+                  </div>
+                </div>
+
+                <div className="h-px w-full bg-muted" />
+
+                <div className="flex w-full justify-between">
+                  <Button
+                    variant="outline"
+                    className="px-4 py-2 text-sm text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white transition-colors"
+                  >
+                    Logout
+                  </Button>
+                </div>
+              </div>
+            )}
+          </HoverCardContent>
+        </HoverCard>
       </div>
     </nav>
   );

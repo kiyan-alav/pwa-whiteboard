@@ -1,13 +1,11 @@
 import * as jose from "jose";
 import type { NextRequest } from "next/server";
 import { NextResponse } from "next/server";
-import { authMiddleware } from "./middlewares/authMiddleware";
 
 const secret = new TextEncoder().encode(process.env.AccessTokenSecretKey);
 
 async function verifyToken(req: NextRequest) {
   const accessToken = req.cookies.get("accessToken")?.value;
-
   if (!accessToken) return null;
 
   try {
@@ -34,9 +32,6 @@ export async function middleware(request: NextRequest) {
       return NextResponse.redirect(new URL("/board", request.url));
     }
   }
-
-  const authResponse = await authMiddleware(request);
-  if (authResponse) return authResponse;
 
   return NextResponse.next();
 }
