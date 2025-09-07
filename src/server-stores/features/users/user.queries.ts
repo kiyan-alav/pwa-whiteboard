@@ -35,4 +35,11 @@ export const useLoginUser = () => {
 };
 
 export const useGetMeUser = () =>
-  useQuery<User>({ queryKey: ["users"], queryFn: api.getMe });
+  useQuery<User>({ queryKey: ["getMe"], queryFn: api.getMe });
+
+export const useUsers = () =>
+  useQuery({
+    queryKey: ["users"],
+    queryFn: api.getUsersList,
+    refetchInterval: 5000,
+  });
