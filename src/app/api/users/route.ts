@@ -5,7 +5,7 @@ export async function GET() {
   try {
     await connectToDB();
 
-    const data = await User.find().select("_id firstName lastName email");
+    const data = await User.find().select("_id firstName lastName email isOnline");
 
     return Response.json(data, { status: 200 });
   } catch (error) {

@@ -3,9 +3,11 @@ import UserBox from "@/components/common/UserBox";
 import { useUsers } from "@/server-stores/features/users/user.queries";
 
 function Users() {
-  const { data } = useUsers();
+  const { data: users, isLoading } = useUsers();
 
-  console.log(data);
+  if (isLoading) return <p>Loading...</p>;
+
+  console.log(users);
 
   return (
     <div className="flex-1 p-4 space-y-3">

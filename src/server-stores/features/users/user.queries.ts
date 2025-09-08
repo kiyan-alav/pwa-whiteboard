@@ -1,5 +1,7 @@
-import { useMutation, useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
+import { useEffect } from "react";
+import { io } from "socket.io-client";
 import { toast } from "sonner";
 import * as api from "./user.api";
 import { CreateNewUserData, LoginUserData, User } from "./user.types";
@@ -37,9 +39,33 @@ export const useLoginUser = () => {
 export const useGetMeUser = () =>
   useQuery<User>({ queryKey: ["getMe"], queryFn: api.getMe });
 
-export const useUsers = () =>
-  useQuery({
+let socket: any;
+
+export const useUsers = () => {
+  const queryClient = useQueryClient();
+
+  const query = useQuery({
     queryKey: ["users"],
     queryFn: api.getUsersList,
-    refetchInterval: 5000,
+    staleTime: 1000 * 60,
+    refetchOnWindowFocus: false,
   });
+
+  useEffect(() => {
+    if (!socket) {
+      socket = io("http://localhost:3001", {
+        transports: ["websocket"],
+      });
+    }
+
+    socket.on("users:update", (users: User[]) => {
+      queryClient.setQueryData(["users"], users);
+    });
+
+    return () => {
+      socket?.off("users:update");
+    };
+  }, [queryClient]);
+
+  return query;
+};

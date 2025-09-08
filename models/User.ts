@@ -5,6 +5,7 @@ interface IUser extends Document {
   lastName: string;
   email: string;
   password: string;
+  isOnline: boolean;
 }
 
 const UserSchema = new Schema<IUser>({
@@ -24,6 +25,10 @@ const UserSchema = new Schema<IUser>({
   password: {
     type: String,
     required: true,
+  },
+  isOnline: {
+    type: Boolean,
+    default: false,
   },
 });
 
