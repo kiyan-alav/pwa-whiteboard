@@ -83,7 +83,7 @@ function TopNavbar() {
                 <div className="flex items-center gap-3">
                   <Avatar className="size-12">
                     <AvatarImage src="/default-avatar.png" alt="User avatar" />
-                    <AvatarFallback>
+                    <AvatarFallback className={`${data.profileColor}`}>
                       {`${data.firstName[0]}${data.lastName[0]}`}
                     </AvatarFallback>
                   </Avatar>

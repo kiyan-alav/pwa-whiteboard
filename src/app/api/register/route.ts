@@ -1,12 +1,12 @@
+import connectToDB from "@/configs/db";
+import User from "@/models/User";
 import { hashPassword } from "@/utils/auth";
-import connectToDB from "../../../../configs/db";
-import User from "../../../../models/User";
 
 export async function POST(req: Request) {
   try {
     await connectToDB();
     const body = await req.json();
-    const { firstName, lastName, email, password } = body;
+    const { firstName, lastName, email, password, profileColor } = body;
 
     const existingUser = await User.findOne({ email });
 
@@ -24,6 +24,7 @@ export async function POST(req: Request) {
       lastName,
       email,
       password: hashedPassword,
+      profileColor,
     });
 
     return Response.json(

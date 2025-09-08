@@ -6,6 +6,7 @@ interface IUser extends Document {
   email: string;
   password: string;
   isOnline: boolean;
+  profileColor: string;
 }
 
 const UserSchema = new Schema<IUser>({
@@ -29,6 +30,10 @@ const UserSchema = new Schema<IUser>({
   isOnline: {
     type: Boolean,
     default: false,
+  },
+  profileColor: {
+    type: String,
+    required: true,
   },
 });
 

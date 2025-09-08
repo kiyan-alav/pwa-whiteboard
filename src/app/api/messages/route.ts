@@ -1,15 +1,14 @@
 import connectToDB from "@/configs/db";
-import User from "@/models/User";
+import Message from "@/models/Message";
 
 export async function GET() {
   try {
     await connectToDB();
+    const messages = await Message.find()
+      .sort({ createdAt: 1 })
+      .populate("sender");
 
-    const data = await User.find().select(
-      "_id firstName lastName email isOnline profileColor"
-    );
-
-    return Response.json(data, { status: 200 });
+    return Response.json(messages, { status: 200 });
   } catch (error) {
     return Response.json(
       {

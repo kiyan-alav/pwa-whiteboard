@@ -1,6 +1,6 @@
 import { generateAccessToken, verifyPassword } from "@/utils/auth";
-import connectToDB from "../../../../configs/db";
-import User from "../../../../models/User";
+import connectToDB from "@/configs/db";
+import User from "@/models/User";
 
 export async function POST(req: Request) {
   try {

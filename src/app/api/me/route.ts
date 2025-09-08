@@ -1,8 +1,8 @@
 import { verifyAccessToken } from "@/utils/auth";
 import { JwtPayload } from "jsonwebtoken";
 import { cookies } from "next/headers";
-import connectToDB from "../../../../configs/db";
-import User from "../../../../models/User";
+import connectToDB from "@/configs/db";
+import User from "@/models/User";
 
 interface MyJwtPayload extends JwtPayload {
   id: string;
@@ -33,7 +33,7 @@ export async function GET() {
     }
 
     const verifiedUser = await User.findById(tokenPayload.id)
-      .select("firstName lastName email")
+      .select("firstName lastName email profileColor")
       .lean();
 
     if (!verifiedUser) {

@@ -7,28 +7,18 @@ function Users() {
 
   if (isLoading) return <p>Loading...</p>;
 
-  console.log(users);
-
   return (
     <div className="flex-1 p-4 space-y-3">
-      <UserBox
-        imgFallBack="A"
-        name="Alex Chen"
-        profileColor="bg-blue-500"
-        status={1}
-      />
-      <UserBox
-        imgFallBack="S"
-        name=" Sarah Wilson"
-        profileColor="bg-green-500"
-        status={0}
-      />
-      <UserBox
-        imgFallBack="Y"
-        name="You"
-        profileColor="bg-purple-500"
-        status={1}
-      />
+      {users &&
+        users.map((user) => (
+          <UserBox
+            imgFallBack={`${user.firstName[0]}${user.lastName[0]}`}
+            name={`${user.firstName || ""} ${user.lastName || ""}`}
+            profileColor={user.profileColor}
+            status={user.isOnline ? 1 : 0}
+            key={user._id}
+          />
+        ))}
     </div>
   );
 }

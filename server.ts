@@ -2,6 +2,7 @@ import next from "next";
 import { createServer } from "node:http";
 import { Server } from "socket.io";
 import connectToDB from "./configs/db";
+import Message from "./models/Message";
 import User from "./models/User";
 
 const dev = process.env.NODE_ENV !== "production";
@@ -27,6 +28,15 @@ app.prepare().then(() => {
         "_id firstName lastName email isOnline"
       );
       io.emit("users:update", users);
+    });
+
+    socket.on("send-message", async ({ userId, message }) => {
+      await connectToDB();
+      const msg = await Message.create({ sender: userId, message });
+      console.log("msg ==========", msg);
+
+      const populatedMsg = await msg.populate("sender");
+      io.emit("new-message", populatedMsg);
     });
 
     socket.on("disconnect", async () => {

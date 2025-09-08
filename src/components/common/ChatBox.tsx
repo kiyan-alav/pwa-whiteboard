@@ -25,7 +25,7 @@ function ChatBox({
             <div className="text-xs text-gray-500 dark:text-gray-400 mb-1 text-right">
               {name} • {time}
             </div>
-            <div className="bg-primary text-white rounded-lg px-3 py-2 text-sm ml-8">
+            <div className="bg-primary text-white dark:text-slate-800 rounded-lg px-3 py-2 text-sm ml-8">
               {message}
             </div>
           </div>

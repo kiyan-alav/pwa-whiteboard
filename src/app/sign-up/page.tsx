@@ -25,6 +25,7 @@ const formSchema = z
       .string()
       .min(6, { message: "Password must be at least 6 characters" }),
     confirmPassword: z.string().min(6, { message: "Confirm your password" }),
+    profileColor: z.string(),
   })
   .refine((data) => data.password === data.confirmPassword, {
     message: "Passwords don't match",
@@ -37,6 +38,20 @@ function SignUp() {
 
   const { mutate } = useCreateNewUser();
 
+  function getRandomColor() {
+    const colors = [
+      "bg-blue-500",
+      "bg-red-500",
+      "bg-green-500",
+      "bg-yellow-500",
+      "bg-purple-500",
+      "bg-pink-500",
+      "bg-indigo-500",
+      "bg-teal-500",
+    ];
+    return colors[Math.floor(Math.random() * colors.length)];
+  }
+
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -45,11 +60,12 @@ function SignUp() {
       email: "",
       password: "",
       confirmPassword: "",
+      profileColor: getRandomColor(),
     },
   });
 
   function onSubmit(values: z.infer<typeof formSchema>) {
-    mutate(values)
+    mutate(values);
   }
 
   return (

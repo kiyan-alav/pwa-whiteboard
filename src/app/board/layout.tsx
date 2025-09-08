@@ -1,6 +1,7 @@
 "use client";
 import LeftToolbar from "@/components/common/LeftToolbar";
 import TopNavbar from "@/components/common/TopNavbar";
+import { useUsers } from "@/server-stores/features/users/user.queries";
 import Link from "next/link";
 import { useSelectedLayoutSegment } from "next/navigation";
 
@@ -11,6 +12,8 @@ function BoardLayout({
   children: React.ReactNode;
   panel: React.ReactNode;
 }) {
+  const { data: users } = useUsers();
+
   const panelSegment = useSelectedLayoutSegment("panel");
 
   return (
@@ -49,7 +52,7 @@ function BoardLayout({
                 }`}
                 // onclick="switchTab('users')"
               >
-                Users (3)
+                Users ({users?.length})
               </Link>
             </div>
             {panel}
