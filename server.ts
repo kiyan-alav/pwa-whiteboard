@@ -25,7 +25,7 @@ app.prepare().then(() => {
       socket.data.userId = userId;
 
       const users = await User.find().select(
-        "_id firstName lastName email isOnline"
+        "_id firstName lastName email isOnline profileColor"
       );
       io.emit("users:update", users);
     });
@@ -47,7 +47,7 @@ app.prepare().then(() => {
       }
 
       const users = await User.find().select(
-        "_id firstName lastName email isOnline"
+        "_id firstName lastName email isOnline profileColor"
       );
       io.emit("users:update", users);
     });

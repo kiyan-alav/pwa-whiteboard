@@ -10,6 +10,8 @@ export const loginUser = (data: LoginUserData) =>
 export const getMe = () =>
   axiosClient.get("/api/me").then((res) => res.data.data);
 
+export const logoutUser = () => axiosClient.post("/api/logout");
+
 export const getUsersList = () =>
   axiosClient.get("/api/users").then((res) => res.data);
 

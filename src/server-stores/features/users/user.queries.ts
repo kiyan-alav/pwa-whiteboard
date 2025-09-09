@@ -33,9 +33,25 @@ export const useLoginUser = () => {
 
   return useMutation({
     mutationFn: (data: LoginUserData) => api.loginUser(data),
+    
     onSuccess: (data) => {
       toast.success(data.data.message);
-      router.replace("/board");
+      router.replace("/board/users");
+    },
+    onError: (error: any) => {
+      toast.error(error.data.message);
+    },
+  });
+};
+
+export const useLogoutUser = () => {
+  const router = useRouter();
+
+  return useMutation({
+    mutationFn: api.logoutUser,
+    onSuccess: (data) => {
+      toast.success(data.data.message);
+      router.replace("/");
     },
     onError: (error: any) => {
       toast.error(error.data.message);

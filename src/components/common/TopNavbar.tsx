@@ -1,6 +1,9 @@
 import { useSocket } from "@/hooks/useSocket";
 import { useUiStore } from "@/local-stores/providers/ui-store-provider";
-import { useGetMeUser } from "@/server-stores/features/users/user.queries";
+import {
+  useGetMeUser,
+  useLogoutUser,
+} from "@/server-stores/features/users/user.queries";
 import {
   HoverCard,
   HoverCardContent,
@@ -14,6 +17,7 @@ function TopNavbar() {
   const toggleTheme = useUiStore((state) => state.toggleTheme);
 
   const { data, isError } = useGetMeUser();
+  const { mutate } = useLogoutUser();
   useSocket(data?._id);
 
   return (
@@ -70,7 +74,7 @@ function TopNavbar() {
             >
               <Avatar className="size-9">
                 <AvatarImage src="" alt="User avatar" />
-                <AvatarFallback>
+                <AvatarFallback className={`${data?.profileColor}`}>
                   {data ? `${data.firstName[0]}${data.lastName[0]}` : "?"}
                 </AvatarFallback>
               </Avatar>
@@ -101,6 +105,7 @@ function TopNavbar() {
 
                 <div className="flex w-full justify-between">
                   <Button
+                    onClick={() => mutate()}
                     variant="outline"
                     className="px-4 py-2 text-sm text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white transition-colors"
                   >

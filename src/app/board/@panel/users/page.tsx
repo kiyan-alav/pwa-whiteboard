@@ -14,7 +14,7 @@ function Users() {
           <UserBox
             imgFallBack={`${user.firstName[0]}${user.lastName[0]}`}
             name={`${user.firstName || ""} ${user.lastName || ""}`}
-            profileColor={user.profileColor}
+            profileColor={user.profileColor || ""}
             status={user.isOnline ? 1 : 0}
             key={user._id}
           />
