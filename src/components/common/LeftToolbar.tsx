@@ -1,3 +1,4 @@
+import { BrushCleaning } from "lucide-react";
 import { Button } from "../ui/button";
 import BrushButton from "./BrushButton";
 import ColorButton from "./ColorButton";
@@ -28,6 +29,13 @@ function LeftToolbar() {
               clipRule="evenodd"
             />
           </svg>
+        </Button>
+        <Button
+          variant="default"
+          size="icon"
+          className="size-10 rounded-lg text-gray-700 dark:text-gray-300 bg-gray-100 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 flex items-center justify-center transition-colors"
+        >
+          <BrushCleaning />
         </Button>
       </div>
 

@@ -70,7 +70,7 @@ function TopNavbar() {
           <HoverCardTrigger asChild>
             <Button
               variant="ghost"
-              className="p-0 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800"
+              className="p-0 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 text-white"
             >
               <Avatar className="size-9">
                 <AvatarImage src="" alt="User avatar" />

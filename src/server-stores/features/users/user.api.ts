@@ -14,6 +14,3 @@ export const logoutUser = () => axiosClient.post("/api/logout");
 
 export const getUsersList = () =>
   axiosClient.get("/api/users").then((res) => res.data);
-
-export const getMessagesList = () =>
-  axiosClient.get("/api/messages").then((res) => res.data);

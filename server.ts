@@ -1,8 +1,10 @@
 import next from "next";
+import cron from "node-cron";
 import { createServer } from "node:http";
 import { Server } from "socket.io";
 import connectToDB from "./configs/db";
 import Message from "./models/Message";
+import Stroke from "./models/Stroke";
 import User from "./models/User";
 
 const dev = process.env.NODE_ENV !== "production";
@@ -12,9 +14,19 @@ const port = parseInt(process.env.PORT || "3001", 10);
 const app = next({ dev, hostname, port });
 const handle = app.getRequestHandler();
 
-app.prepare().then(() => {
+app.prepare().then(async () => {
+  await connectToDB();
   const httpServer = createServer(handle);
   const io = new Server(httpServer);
+
+  cron.schedule("0 0 * * *", async () => {
+    try {
+      await Stroke.deleteMany({});
+      console.log("[cron] strokes cleared at midnight");
+    } catch (error) {
+      console.error("[cron] failed to clear strokes:", error);
+    }
+  });
 
   io.on("connection", async (socket) => {
     console.log(`User connected: ${socket.id}`);
@@ -33,10 +45,25 @@ app.prepare().then(() => {
     socket.on("send-message", async ({ userId, message }) => {
       await connectToDB();
       const msg = await Message.create({ sender: userId, message });
-      console.log("msg ==========", msg);
 
       const populatedMsg = await msg.populate("sender");
       io.emit("new-message", populatedMsg);
+    });
+
+    // --- DRAW events (relay only) ---
+    socket.on("start-draw", (meta) => {
+      // meta: { strokeId, userId, tool, color, size }
+      socket.broadcast.emit("drawing", meta);
+    });
+
+    socket.on("drawing", (payload) => {
+      // payload: { strokeId, points: [{x,y}, ...] }
+      socket.broadcast.emit("drawing", payload);
+    });
+
+    socket.on("end-draw", (meta) => {
+      // meta: { strokeId, userId }
+      socket.broadcast.emit("end-draw", meta);
     });
 
     socket.on("disconnect", async () => {

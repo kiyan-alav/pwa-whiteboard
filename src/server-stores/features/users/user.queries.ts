@@ -1,17 +1,10 @@
-import { useSocket } from "@/hooks/useSocket";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 import { io } from "socket.io-client";
 import { toast } from "sonner";
 import * as api from "./user.api";
-import {
-  CreateNewUserData,
-  LoginUserData,
-  Message,
-  SendMessagePayload,
-  User,
-} from "./user.types";
+import { CreateNewUserData, LoginUserData, User } from "./user.types";
 
 export const useCreateNewUser = () => {
   const router = useRouter();
@@ -33,7 +26,7 @@ export const useLoginUser = () => {
 
   return useMutation({
     mutationFn: (data: LoginUserData) => api.loginUser(data),
-    
+
     onSuccess: (data) => {
       toast.success(data.data.message);
       router.replace("/board/users");
@@ -91,47 +84,4 @@ export const useUsers = () => {
   }, [queryClient]);
 
   return query;
-};
-
-export const useMessages = () => {
-  const queryClient = useQueryClient();
-
-  const query = useQuery<Message[]>({
-    queryKey: ["messages"],
-    queryFn: api.getMessagesList,
-    staleTime: 1000 * 60,
-    refetchOnWindowFocus: false,
-  });
-
-  useEffect(() => {
-    if (!socket) {
-      socket = io("http://localhost:3001", {
-        transports: ["websocket"],
-      });
-    }
-
-    socket.on("new-message", (msg: Message) => {
-      queryClient.setQueryData<Message[]>(["messages"], (old = []) => [
-        ...old,
-        msg,
-      ]);
-    });
-
-    return () => {
-      socket?.off("new-message");
-    };
-  }, [queryClient]);
-
-  return query;
-};
-
-export const useSendMessage = () => {
-  const socket = useSocket();
-
-  const sendMessage = ({ userId, message }: SendMessagePayload) => {
-    if (!socket) return;
-    socket.emit("send-message", { userId, message });
-  };
-
-  return { sendMessage };
 };

@@ -2,10 +2,9 @@
 import ChatBox from "@/components/common/ChatBox";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { useMessages, useSendMessage } from "@/server-stores/features/messages/message.queries";
 import {
   useGetMeUser,
-  useMessages,
-  useSendMessage,
 } from "@/server-stores/features/users/user.queries";
 import { useState } from "react";
 
