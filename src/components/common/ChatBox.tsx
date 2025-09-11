@@ -33,7 +33,12 @@ function ChatBox({
             className={`size-6 rounded-full flex items-center justify-center text-sm text-white font-medium`}
           >
             <AvatarImage src="" />
-            <AvatarFallback className={`${profileColor}`}>
+            <AvatarFallback
+              className={`bg-[${profileColor}]`}
+              style={{
+                backgroundColor: profileColor,
+              }}
+            >
               {imgFallBack}
             </AvatarFallback>
           </Avatar>
@@ -45,7 +50,12 @@ function ChatBox({
             className={`size-6 rounded-full flex items-center justify-center text-sm text-white font-medium`}
           >
             <AvatarImage src="" />
-            <AvatarFallback className={`${profileColor}`}>
+            <AvatarFallback
+              className={`bg-[${profileColor}]`}
+              style={{
+                backgroundColor: profileColor,
+              }}
+            >
               {imgFallBack}
             </AvatarFallback>
           </Avatar>

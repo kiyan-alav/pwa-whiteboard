@@ -1,8 +1,9 @@
-import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import * as api from "./stroke.api";
 
 import { useSocket } from "@/hooks/useSocket";
 import { useEffect } from "react";
+import { SendStrokeData } from "./stroke.types";
 
 export const useStrokes = () => {
   const queryClient = useQueryClient();
@@ -20,4 +21,10 @@ export const useStrokes = () => {
   }, [socket]);
 
   return query;
+};
+
+export const useSendStroke = () => {
+  return useMutation({
+    mutationFn: (data: SendStrokeData) => api.sendStroke(data),
+  });
 };

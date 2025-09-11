@@ -23,7 +23,7 @@ function TopNavbar() {
   return (
     <nav className="bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700 px-4 py-3 flex items-center justify-between shadow-sm">
       <div className="flex items-center space-x-3">
-        <div className="size-8 bg-primary rounded-lg flex items-center justify-center">
+        <div className="size-8 bg-primary dark:bg-gray-900 rounded-lg flex items-center justify-center">
           <svg
             className="w-5 h-5 text-white"
             fill="currentColor"
@@ -74,7 +74,12 @@ function TopNavbar() {
             >
               <Avatar className="size-9">
                 <AvatarImage src="" alt="User avatar" />
-                <AvatarFallback className={`${data?.profileColor}`}>
+                <AvatarFallback
+                  className={`bg-[${data?.profileColor}]`}
+                  style={{
+                    backgroundColor: data?.profileColor,
+                  }}
+                >
                   {data ? `${data.firstName[0]}${data.lastName[0]}` : "?"}
                 </AvatarFallback>
               </Avatar>
@@ -87,7 +92,7 @@ function TopNavbar() {
                 <div className="flex items-center gap-3">
                   <Avatar className="size-12">
                     <AvatarImage src="/default-avatar.png" alt="User avatar" />
-                    <AvatarFallback className={`${data.profileColor}`}>
+                    <AvatarFallback className={`bg-[${data.profileColor}]`}>
                       {`${data.firstName[0]}${data.lastName[0]}`}
                     </AvatarFallback>
                   </Avatar>

@@ -66,6 +66,11 @@ app.prepare().then(async () => {
       socket.broadcast.emit("end-draw", meta);
     });
 
+    socket.on("clear-board", async () => {
+      await Stroke.deleteMany({});
+      io.emit("board-cleared");
+    });
+
     socket.on("disconnect", async () => {
       console.log(`User disconnected: ${socket.id}`);
       if (socket.data.userId) {

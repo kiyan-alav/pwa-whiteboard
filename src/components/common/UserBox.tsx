@@ -8,15 +8,18 @@ interface UserBoxProps {
 }
 
 function UserBox({ imgFallBack, name, profileColor, status }: UserBoxProps) {
-  console.log(profileColor);
-
   return (
     <div className="flex items-center space-x-3 p-2 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700">
       <Avatar
         className={`size-8 rounded-full flex items-center justify-center text-sm text-white font-medium`}
       >
         <AvatarImage src="" />
-        <AvatarFallback className={`${profileColor}`}>
+        <AvatarFallback
+          className={`bg-[${profileColor}]`}
+          style={{
+            backgroundColor: profileColor,
+          }}
+        >
           {imgFallBack}
         </AvatarFallback>
       </Avatar>
