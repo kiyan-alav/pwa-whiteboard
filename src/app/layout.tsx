@@ -16,6 +16,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
+  manifest: "/manifest.json",
   title: "CollabBoard",
   description:
     "Collaborate in real-time with your team on an infinite digital whiteboard",
