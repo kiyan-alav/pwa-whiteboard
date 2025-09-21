@@ -268,6 +268,10 @@ function BoardLayout({
       socket?.emit("end-draw", {
         strokeId: currentStroke.current.strokeId,
         userId: me?._id,
+        tool: currentStroke.current.tool,
+        color: currentStroke.current.color,
+        size: currentStroke.current.size,
+        points: currentStroke.current.points,
       });
 
       try {
@@ -358,6 +362,20 @@ function BoardLayout({
 
     return () => {
       socket.off("board-cleared", handleBoardCleared);
+    };
+  }, [socket, queryClient]);
+
+  useEffect(() => {
+    if (!socket) return;
+
+    socket.on("stroke:saved", (stroke) => {
+      queryClient.setQueryData(["strokes"], (old: any) =>
+        old ? [...old, stroke] : [stroke]
+      );
+    });
+
+    return () => {
+      socket.off("stroke:saved");
     };
   }, [socket, queryClient]);
 

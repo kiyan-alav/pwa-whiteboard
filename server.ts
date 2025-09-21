@@ -61,9 +61,20 @@ app.prepare().then(async () => {
       socket.broadcast.emit("drawing", payload);
     });
 
-    socket.on("end-draw", (meta) => {
-      // meta: { strokeId, userId }
-      socket.broadcast.emit("end-draw", meta);
+    socket.on("end-draw", async (meta) => {
+      try {
+        const stroke = await Stroke.create({
+          userId: meta.userId,
+          tool: meta.tool,
+          color: meta.color,
+          size: meta.size,
+          points: meta.points,
+        });
+
+        io.emit("stroke:saved", stroke);
+      } catch (err) {
+        console.error("failed to save stroke", err);
+      }
     });
 
     socket.on("clear-board", async () => {
