@@ -6,7 +6,6 @@ import { useEffect } from "react";
 import { SendStrokeData } from "./stroke.types";
 
 export const useStrokes = () => {
-  const queryClient = useQueryClient();
   const socket = useSocket();
 
   const query = useQuery({
